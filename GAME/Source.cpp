@@ -3,14 +3,15 @@
 #include <allegro5\allegro_ttf.h>
 #include <allegro5\allegro_primitives.h>	//primitive header file
 #include "Objects.h"
-enum Keys{ A, S, D, W };
+enum Keys{ A, S, D, W, SPACE };
 int res_x = 1280;
 int res_y = 820;
 int pos_x = 0;
 int checkpoint = 0;
 int blockNum = 0;
+const int num_proj = 5;
 using namespace std;
-bool dead = false;
+
 
 struct person{
 	int r = 20;
@@ -25,7 +26,7 @@ struct person{
 
 
 }player;
-
+int c = 0;
 int box_width = player.r * 2 + 15;
 int box_bounds = box_width;
 int pipe_width = 120;
@@ -35,7 +36,45 @@ int spike_width = 20;
 
 
 
+void initproj(Projectiles proj[], int size);
+void drawproj(Projectiles proj[], int size);
+void shoot(Projectiles proj[], int size);
+void update(Projectiles proj[], int size);
+void SetEnemies(enemies guys[], int size);
+void StartEnemies(enemies guys[], int size);
+void CreateEnemies(enemies guys[], int size, int counter);
+void DrawEnemies(enemies guys[], int size, int counter);
+void MoveEnemy(bool check);
+void Collision(Projectiles proj[], int sizeP, enemies guys[], int sizeE, int counter);
+bool CollideEnemy(enemies guys[], int size, int counter);
+void CreateLuigi();
 
+int const num_enemies = 6;
+bool shot = false;
+
+enemies guys[num_enemies];
+
+
+
+
+
+
+
+
+
+
+
+void initSpike(spike spikes[], int size);
+void createSpike(spike spikes[], int size);
+bool spikeCollide(spike spikes[], int size);
+
+
+
+void initPipe(Pipe pipes[], int size);
+void createPI(Pipe pipes[], int size);
+bool checkpipe(Pipe pipes[], int size);
+bool pipe_right(Pipe pipes[], int size);
+bool pipe_left(Pipe pipes[], int size);
 
 
 
@@ -46,11 +85,6 @@ bool block_limit(block blocks[], int size);
 bool noblock(block blocks[], int size);//****************************************************************
 bool box_right(block blocks[], int size); //****************************************************************
 bool box_left(block blocks[], int size);//******************************************************************
-
-
-
-
-
 int main(void)
 {
 	int temp = 0;
